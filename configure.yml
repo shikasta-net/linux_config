@@ -1,0 +1,35 @@
+---
+
+- hosts: localhost
+  tasks:
+    - name: Git
+      block:
+        - package:
+            name:
+              - git
+            state: present
+          become: true
+
+    - name: Tmux
+      block:
+        - package:
+            name:
+              - tmux
+            state: present
+          become: true
+
+    - name: Vi
+      block:
+        - package:
+            name:
+              - vim
+            state: present
+          become: true
+
+    - name: editorconfig
+      block:
+        - package:
+            name:
+              - editorconfig
+            state: present
+          become: true
