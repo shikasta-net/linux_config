@@ -1,0 +1,30 @@
+
+" Startup configuration
+set spelllang=en_gb
+set spell
+set backupcopy=yes
+set backupdir=~/.vimtmp//,.
+set directory=~/.vimtmp//,.
+" colorscheme morning
+
+" Define hotkey
+nmap <silent> <F8> :set spell!<CR>
+
+" indentation
+filetype plugin indent on
+" show existing tab with 4 spaces width
+set tabstop=4
+" when indenting with '>', use 2 spaces width
+set shiftwidth=2
+" On pressing tab, insert 2 spaces
+set expandtab
+
+" Auto start types
+autocmd FileType gitcommit exec 'au VimEnter * startinsert'
+
+" Aliases
+cmap w!! w !sudo tee > /dev/null %
+
+if &diff
+  syntax off
+endif

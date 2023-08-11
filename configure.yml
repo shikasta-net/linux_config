@@ -1,7 +1,40 @@
 ---
 
 - hosts: localhost
+  vars_prompt:
+    - name: email
+      prompt: Email for git?
+      private: false
   tasks:
+    - name: Bash
+      block:
+        - blockinfile:
+            path: ~/.bashrc
+            block: |
+              if [ -d ~/.bashrc.d ]; then
+                for rc in ~/.bashrc.d/*; do
+                  if [ -f "$rc" ]; then
+                    . "$rc"
+                  fi
+                done
+              fi
+        - file:
+            path: ~/.bashrc.d
+            state: directory
+
+    - name: FZF
+      block:
+        - package:
+            name: fzf
+            state: present
+          become: true
+      rescue:
+        - git:
+            repo: https://github.com/junegunn/fzf.git
+            dest: ~/.fzf
+            depth: 1
+        - shell: ~/.fzf/install
+
     - name: Git
       block:
         - package:
@@ -9,6 +42,9 @@
               - git
             state: present
           become: true
+        - template:
+            src: template/gitconfig
+            dest: ~/.gitconfig
 
     - name: Tmux
       block:
@@ -17,6 +53,16 @@
               - tmux
             state: present
           become: true
+        - git:
+            repo: https://github.com/tmux-plugins/tpm
+            dest: ~/.tmux/plugins/tpm
+            depth: 1
+        - template:
+            src: template/tmux.conf
+            dest: ~/.tmux.conf
+        - template:
+            src: template/tmux.bashrc
+            dest: ~/.bashrc.d/tmux.bashrc
 
     - name: Vi
       block:
@@ -25,6 +71,9 @@
               - vim
             state: present
           become: true
+        - template:
+            src: template/vimrc
+            dest: ~/.vimrc
 
     - name: editorconfig
       block:
@@ -33,3 +82,6 @@
               - editorconfig
             state: present
           become: true
+        - template:
+            src: template/editorconfig
+            dest: ~/.editorconfig

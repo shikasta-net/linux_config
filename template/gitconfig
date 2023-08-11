@@ -1,0 +1,30 @@
+[core]
+    editor = vim
+    eol = lf
+    autocrlf = false
+[user]
+    name = Kym Eden
+	email = "{{ email }}"
+[push]
+    default = simple
+[pull]
+    rebase = true
+[merge]
+    tool = vimdiff
+[alias]
+    com = commit -m
+    s = status
+    ap = add -p
+    coma = commit --amend
+    new = !sh -c 'git checkout -b $1 && git push -u origin $1' -
+    co = checkout
+    autosquash = !git rebase -i --autosquash ${1:-$(git log --pretty=oneline | fzf --delimiter=' ' --nth=2.. | cut -d ' ' -f 1)} && :
+    ri = rebase -i
+    rc = rebase --continue
+    fixup = !git commit --fixup $1
+    fx = !git commit --fixup ${1:-$(git log --pretty=oneline | fzf --delimiter=' ' --nth=2.. | cut -d ' ' -f 1)} && :
+    prune-branches = !git remote prune origin && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r -n 1 git branch -D
+    prune-remote = !sh -c 'git branch -r --list origin/$1* | sed -e "s%^[[:blank:]]*origin/%%" | xargs -r git push origin --delete' -
+    log-since = !git log --format="%s" $1..HEAD
+    chbr=!git checkout $(git branch | grep $1) && :
+    chbrr=!git checkout --track $(git branch -a | grep $1) && :
