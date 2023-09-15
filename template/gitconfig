@@ -15,7 +15,7 @@
     com = commit -m
     s = status
     ap = add -p
-    coma = commit --amend
+    coma = commit --amend --no-edit
     new = !sh -c 'git checkout -b $1 && git push -u origin $1' -
     co = checkout
     autosquash = !git rebase -i --autosquash ${1:-$(git log --pretty=oneline | fzf --delimiter=' ' --nth=2.. | cut -d ' ' -f 1)} && :
