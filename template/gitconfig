@@ -28,3 +28,5 @@
     log-since = !git log --format="%s" $1..HEAD
     chbr=!git checkout $(git branch | grep $1) && :
     chbrr=!git checkout --track $(git branch -a | grep $1) && :
+[credential]
+    helper = store
