@@ -19,6 +19,9 @@ set shiftwidth=2
 " On pressing tab, insert 2 spaces
 set expandtab
 
+" Docker bind mount compatiblity # vim: bkc=yes bk wb
+set modeline
+
 " Auto start types
 autocmd FileType gitcommit exec 'au VimEnter * startinsert'
 
