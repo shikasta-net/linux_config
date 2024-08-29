@@ -22,6 +22,15 @@
             path: ~/.bashrc.d
             state: directory
 
+    - name: ssh
+      block:
+        - file:
+            path: ~/.ssh
+            state: directory
+        - file:
+            path: ~/.ssh/authorized_keys
+            state: touch
+
     - name: FZF
       block:
         - package:
